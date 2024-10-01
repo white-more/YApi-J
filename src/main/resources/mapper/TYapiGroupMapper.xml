@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ifs.yapi.mapper.TYapiGroupMapper">
+    <resultMap type="org.ifs.yapi.entity.TYapiGroup" id="TYapiGroupMap">
+        <result property="id" column="ID" javaType="String"/>
+        <result property="groupName" column="GROUP_NAME" javaType="String"/>
+        <result property="groupDesc" column="GROUP_DESC" javaType="String"/>
+        <result property="type" column="TYPE" javaType="String"/>
+        <result property="uid" column="UID" javaType="String"/>
+        <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
+        <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
+        <result property="role" column="ROLE" javaType="String"/>
+        <result property="customField1" column="CUSTOM_FIELD1" javaType="String"/>
+    </resultMap>
+</mapper>
