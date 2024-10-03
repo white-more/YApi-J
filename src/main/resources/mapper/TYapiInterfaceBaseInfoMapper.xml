@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ifs.yapi.mapper.TYapiInterfaceBaseInfoMapper">
+    <resultMap type="org.ifs.yapi.entity.TYapiInterfaceBaseInfo" id="TYapiInterfaceBaseInfoMap">
+        <result property="id" column="ID" javaType="String"/>
+        <result property="index" column="INDEX" javaType="Integer"/>
+        <result property="title" column="TITLE" javaType="String"/>
+        <result property="method" column="METHOD" javaType="String"/>
+        <result property="path" column="PATH" javaType="String"/>
+        <result property="projectId" column="PROJECT_ID" javaType="String"/>
+        <result property="catId" column="CAT_ID" javaType="String"/>
+        <result property="apiOpened" column="API_OPENED" javaType="String"/>
+        <result property="uid" column="UID" javaType="String"/>
+        <result property="editUid" column="EDIT_UID" javaType="String"/>
+        <result property="markdown" column="MARKDOWN" javaType="String"/>
+        <result property="desc" column="DESC" javaType="String"/>
+        <result property="reqBodyIsJsonSchema" column="REQ_BODY_IS_JSON_SCHEMA" javaType="String"/>
+        <result property="reqBodyType" column="REQ_BODY_TYPE" javaType="String"/>
+        <result property="reqBodyOther" column="REQ_BODY_OTHER" javaType="String"/>
+        <result property="resBodyIsJsonSchema" column="RES_BODY_IS_JSON_SCHEMA" javaType="String"/>
+        <result property="resBody" column="RES_BODY" javaType="String"/>
+        <result property="resBodyType" column="RES_BODY_TYPE" javaType="String"/>
+        <result property="status" column="STATUS" javaType="String"/>
+        <result property="type" column="TYPE" javaType="String"/>
+        <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
+        <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+</mapper>

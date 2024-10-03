@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ifs.yapi.mapper.TYapiTokenMapper">
+    <resultMap type="org.ifs.yapi.entity.TYapiToken" id="TYapiTokenMap">
+        <result property="id" column="ID" javaType="String"/>
+        <result property="projectId" column="PROJECT_ID" javaType="String"/>
+        <result property="uid" column="UID" javaType="String"/>
+        <result property="token" column="TOKEN" javaType="String"/>
+    </resultMap>
+</mapper>

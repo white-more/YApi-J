@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ifs.yapi.mapper.TYapiProjectInfoMapper">
+    <resultMap type="org.ifs.yapi.entity.TYapiProjectInfo" id="TYapiProjectInfoMap">
+        <result property="id" column="ID" javaType="String"/>
+        <result property="basePath" column="BASE_PATH" javaType="String"/>
+        <result property="color" column="COLOR" javaType="String"/>
+        <result property="groupId" column="GROUP_ID" javaType="String"/>
+        <result property="icon" column="ICON" javaType="String"/>
+        <result property="name" column="NAME" javaType="String"/>
+        <result property="projectType" column="PROJECT_TYPE" javaType="String"/>
+        <result property="switchNotice" column="SWITCH_NOTICE" javaType="String"/>
+        <result property="uid" column="UID" javaType="String"/>
+        <result property="isJson5" column="IS_JSON5" javaType="String"/>
+        <result property="isMockOpen" column="IS_MOCK_OPEN" javaType="String"/>
+        <result property="role" column="ROLE" javaType="String"/>
+        <result property="desc" column="DESC" javaType="String"/>
+        <result property="strice" column="STRICE" javaType="String"/>
+        <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
+        <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+</mapper>

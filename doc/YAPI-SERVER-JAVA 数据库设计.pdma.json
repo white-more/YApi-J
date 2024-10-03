@@ -4,7 +4,7 @@
   "avatar": "",
   "version": "4.9.4",
   "createdTime": "2024-10-1 18:48:44",
-  "updatedTime": "2024-10-3 20:55:19",
+  "updatedTime": "2024-10-4 07:29:55",
   "dbConns": [],
   "profile": {
     "default": {
@@ -631,7 +631,8 @@
       "#000000",
       "#DDE5FF"
     ],
-    "DDLToggleCase": "L"
+    "DDLToggleCase": "L",
+    "menuWidth": "377px"
   },
   "entities": [
     {

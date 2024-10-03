@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ifs.yapi.mapper.TYapiLoginUserMapper">
+    <resultMap type="org.ifs.yapi.entity.TYapiLoginUser" id="TYapiLoginUserMap">
+        <result property="id" column="ID" javaType="String"/>
+        <result property="userName" column="USER_NAME" javaType="String"/>
+        <result property="email" column="EMAIL" javaType="String"/>
+        <result property="type" column="TYPE" javaType="String"/>
+        <result property="study" column="STUDY" javaType="String"/>
+        <result property="role" column="ROLE" javaType="String"/>
+        <result property="avatar" column="AVATAR" javaType="String"/>
+        <result property="password" column="PASSWORD" javaType="String"/>
+        <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
+        <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+</mapper>
