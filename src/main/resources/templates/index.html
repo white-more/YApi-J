@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <title>YApi-server</title>
+    <link rel="stylesheet" th:href="@{/element-ui/lib/theme-chalk/index.css}">
+    <script type="text/javascript" th:src="@{/js/vue.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/axios.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/vue-router.min.js}"></script>
+    <script type="text/javascript" th:src="@{/element-ui/lib/index.js}"></script>
+
 </head>
 <body>
-    hello java YApi-server
+<div id="app">
+    <router-view></router-view>
+</div>
+<template th:replace="|/component/indexbg|::indexbg"></template>
+<template th:replace="|/component/loginlogo|::loginlogo"></template>
+<template th:replace="|/pages/login|::login"></template>
+
+<script setup>
+
+    const routes = [
+        {
+            name: '',
+            path: '/',
+            redirect: {name: 'login'}
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: YapiLogin
+        }
+    ]
+    const router = new VueRouter({
+        routes
+    })
+
+    const app = new Vue({
+        el: '#app',
+        router,
+        data() {
+
+        },
+        components: [
+            YapiIndexBg,
+            YapiLoginLogo,
+            YapiLogin
+
+        ]
+
+    })
+</script>
 </body>
 </html>
