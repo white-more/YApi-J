@@ -17,6 +17,8 @@
 <template th:replace="|/component/indexbg|::indexbg"></template>
 <template th:replace="|/component/loginlogo|::loginlogo"></template>
 <template th:replace="|/pages/login|::login"></template>
+<template th:replace="|/pages/HomePage|::HomePage"></template>
+<template th:replace="|/pages/GroupPage|::GroupPage"></template>
 
 <script setup>
 
@@ -24,13 +26,22 @@
         {
             name: '',
             path: '/',
-            redirect: {name: 'login'}
+            redirect: {name: 'groupPage'}
+        },
+        {
+            path: '/homePage',
+            name: 'homePage',
+            component: YapiHomePage
         },
         {
             path: '/login',
             name: 'login',
             component: YapiLogin
-        }
+        }, {
+            path: '/groupPage',
+            name: 'groupPage',
+            component: YapiGroupPage
+        },
     ]
     const router = new VueRouter({
         routes
@@ -45,11 +56,18 @@
         components: [
             YapiIndexBg,
             YapiLoginLogo,
-            YapiLogin
-
+            YapiLogin,
+            YapiHomePage,
+            YapiGroupPage
         ]
 
     })
 </script>
+<style>
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+</style>
 </body>
 </html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="HomePage">
+    <template id="yapi-home-page">
+        <div class="home-main" style="height: 100%">
+            <yapi-index-bg></yapi-index-bg>
+            <div class="main-one">
+                <div class="home-container">
+                    <div class="home-title">
+                        <el-row style="width: 100%">
+                            <el-col :span="12">
+                                <div class="grid-content">
+                                    <a href="#" class="item">YAPI</a>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content">
+                                    <a target="_blank" rel="noopener noreferrer"
+                                       href="https://hellosean1025.github.io/yapi" class="item">使用文档</a>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="home-des">
+                        <div class="home-logo">
+                            <yapi-login-logo></yapi-login-logo>
+                            <span>YAPI</span>
+                        </div>
+
+                        <div class="home-logo-des">
+                            <h2>高效、易用、功能强大的API管理平台</h2>
+                            <p>旨在为开发、产品、测试人员提供更优雅的接口管理服务</p>
+                        </div>
+                    </div>
+                    <div class="login-button-group">
+                        <el-button type="primary" @click="jumpToLogin">登 录 / 注 册</el-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        const YapiHomePage = {
+            template: '#yapi-home-page',
+            components: [],
+            props: [],
+            data() {
+                return {}
+            },
+            created() {
+            },
+            mounted() {
+
+
+            },
+            methods: {
+                jumpToLogin() {
+                    this.$router.push({name:'login'})
+                }
+            }
+        }
+    </script>
+    <style>
+        .home-main .main-one {
+            height: 600px;
+        }
+
+        .home-main .home-container {
+            margin: 0 auto;
+            height: 100%;
+            position: relative;
+        }
+
+        .home-title {
+            position: relative;
+            max-width: 12.2rem;
+            margin: 10px auto;
+            padding: 20px;
+            height: 50px;
+            left: -35%;
+        }
+
+        .el-row {
+            margin-bottom: 20px;
+        }
+
+        .el-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .el-col {
+            border-radius: 4px;
+        }
+
+        .grid-content {
+            border-radius: 4px;
+            min-height: 36px;
+        }
+
+        .bg-purple-dark {
+            background: #99a9bf;
+        }
+
+        .grid-content .item {
+            text-decoration: none;
+            display: inline-block;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .home-logo .login-logo svg {
+            width: 72px;
+            height: 72px;
+        }
+
+        .home-main .main-one .home-des {
+            padding: 1rem 0 0;
+            color: #fff;
+            position: relative;
+            margin: 100px auto;
+            right: 40%;
+            max-width: 26rem;
+        }
+
+        .home-logo span {
+            display: block;
+            position: absolute;
+            left: 65%;
+            font-size: 36px;
+            bottom: -5px;
+        }
+
+        .home-logo-des {
+            position: absolute;
+            left: 40%;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .login-button-group {
+            position: relative;
+            top: 100px;
+            max-width: 26rem;
+            left: 7%;
+        }
+    </style>
+</div>
+</html>
