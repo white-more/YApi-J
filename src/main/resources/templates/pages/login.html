@@ -3,7 +3,7 @@
 <div th:fragment="login">
     <template id="yapi-login">
         <div style="height: 100%">
-           <yapi-index-bg></yapi-index-bg>
+            <yapi-index-bg></yapi-index-bg>
             <div class="main-one login-container">
                 <div class="container card-login">
                     <h2 class="login-title">YAPI</h2>
@@ -27,13 +27,13 @@
                                     />
                                 </el-form-item>
                                 <el-form-item>
-                                    <el-button type="primary" style="width: 100%">登录</el-button>
+                                    <el-button type="primary" style="width: 100%" @click="loginSubmit">登录</el-button>
                                 </el-form-item>
                             </el-form>
 
                         </el-tab-pane>
                         <el-tab-pane label="注册" name="registerTab">
-                            <el-form :model="register">
+                            <el-form :model="register" :rules="rules">
                                 <el-form-item>
                                     <el-input
                                             v-model="register.username"
@@ -65,7 +65,8 @@
                                     />
                                 </el-form-item>
                                 <el-form-item>
-                                    <el-button type="primary" style="width: 100%">注册</el-button>
+                                    <el-button type="primary" style="width: 100%" @click="registerMember">注册
+                                    </el-button>
                                 </el-form-item>
                             </el-form>
 
@@ -92,10 +93,25 @@
                         password: ''
                     },
                     register: {
-                        username:'',
+                        username: '',
                         email: '',
                         password: '',
-                        confirmPassword:''
+                        confirmPassword: ''
+                    },
+                    rules: {
+                        username: [
+                            {required: true, message: '用户名必填', trigger: 'blur'}
+                        ],
+                        email: [
+                            {required: true, message: '邮箱必填', trigger: 'blur'}
+                        ],
+                        password: [
+                            {required: true, message: '用户密码必填', trigger: 'blur'}
+                        ],
+                        confirmPassword: [
+                            {required: true, message: '确认密码必填', trigger: 'blur'}
+                        ],
+
                     }
                 }
             },
@@ -105,7 +121,50 @@
 
             },
             methods: {
-                handleChangeTabClick(){}
+                handleChangeTabClick() {
+                },
+                // 用户注册
+                async registerMember() {
+                    let param = {
+                        username: this.register.username,
+                        email: this.register.email,
+                        password: this.register.password,
+                        confirmPassword: this.register.confirmPassword
+                    }
+                    let result = await post('/user/register', param)
+                    if (result > 0) {
+                        this.$message({
+                            message: '注册成功',
+                            type: 'success'
+                        })
+                        // 刷新页面
+                        let that = this
+                        setTimeout(function () {
+                            that.$router.go(0)
+                        }, 2000);
+                    }
+
+                },
+                // 用户登录
+                async loginSubmit() {
+                    let param = {
+                        username: this.login.email,
+                        password: this.login.password
+                    }
+                    let result = await post('/user/login', param)
+                    if (result.id) {
+                        this.$message({
+                            message: '登录成功',
+                            type: 'success'
+                        })
+                        sessionStorage.setItem("userInfo", JSON.stringify(result))
+                        // 刷新页面
+                        let that = this
+                        setTimeout(function () {
+                            that.$router.push({name: 'groupPage'})
+                        }, 1000);
+                    }
+                }
             }
         }
 

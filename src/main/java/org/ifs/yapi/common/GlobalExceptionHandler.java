@@ -12,6 +12,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public YResult exceptionHandler(Exception e) {
         log.error(e.getMessage(), e);
-        return YResult.error(500, "服务器内部错误！");
+        return YResult.error(500, e.getMessage());
     }
 }

@@ -13,4 +13,22 @@
         <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
         <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
     </resultMap>
+
+    <sql id="ALL_COLUMN">
+        `ID`,`USER_NAME`,`EMAIL`,`TYPE`,`STUDY`,`ROLE`,`AVATAR`,`PASSWORD`,`ADD_TIME`,`UP_TIME`
+    </sql>
+    <!--根据用户名(邮箱)和密码查询用户信息-->
+    <select id="queryByUsernameAndPassword" resultMap="TYapiLoginUserMap">
+        select <include refid="ALL_COLUMN"/> from T_YAPI_LOGIN_USER
+        where (`USER_NAME`= #{username} or `EMAIL` = #{username}) and `PASSWORD` = #{password}
+    </select>
+    <!--检查用户名或者邮箱是否重复-->
+    <select id="checkUser" resultType="java.lang.Integer">
+        select count(1)
+        from T_YAPI_LOGIN_USER
+        where `USER_NAME` = #{username}
+           or `EMAIL` = #{username}
+           or `USER_NAME` = #{email}
+           or `EMAIL` = #{email}
+    </select>
 </mapper>
