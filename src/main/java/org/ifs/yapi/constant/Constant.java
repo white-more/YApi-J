@@ -32,6 +32,12 @@ public final class Constant {
     public final static String AUTH_PRIVATE = "private";
 
 
+    /**
+     * 分组归属
+     */
+    public final static String GROUP_AUTH_ROLE="owner";
+
+
 
 
 

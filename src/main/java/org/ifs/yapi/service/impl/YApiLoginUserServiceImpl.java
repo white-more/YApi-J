@@ -69,7 +69,7 @@ public class YApiLoginUserServiceImpl implements IYApiLoginUserService {
         loginUser.setUserName(username);
         loginUser.setEmail(email);
         loginUser.setPassword(password);
-        loginUser.setRole(Constant.USER_ROLE_MEMBER);
+        loginUser.setRole(Constant.GROUP_AUTH_ROLE);
         loginUser.setType(Constant.USER_TYPE_SITE);
         loginUser.setAddTime(LocalDateTime.now());
         loginUser.setUpTime(LocalDateTime.now());

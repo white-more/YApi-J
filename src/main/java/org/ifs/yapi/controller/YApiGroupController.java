@@ -23,7 +23,7 @@ public class YApiGroupController {
     private IYApiGroupService yApiGroupService;
 
     /**
-     * 查询所有分组
+     * 根据分组id查询分组信息
      *
      * @return {@link YResult }<{@link TYapiGroup }>
      */
