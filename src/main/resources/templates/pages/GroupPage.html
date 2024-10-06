@@ -2,11 +2,213 @@
 <html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="GroupPage">
     <template id="yapi-group-page">
-        <el-container>
-            <el-header>Header</el-header>
-            <el-container>
-                <el-aside width="200px">Aside</el-aside>
-                <el-main>Main</el-main>
+        <el-container class="group-page-container">
+            <el-header>
+                <div class="main-header-logo">
+                    <yapi-login-logo></yapi-login-logo>
+                </div>
+                <div class="main-header-title">
+                    <h3>{{currentSelectGroup}}</h3>
+                </div>
+                <!--右侧部分-->
+                <div class="main-header-right">
+                    <div class="header-search">
+                        <el-input
+                                placeholder="搜索分组/项目/接口"
+                                v-model="headerSearchKey">
+                            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                        </el-input>
+                    </div>
+                    <!-- 关注-->
+                    <div class="header-jump-icon">
+                        <a href="#">
+                            <i class="el-icon-star-off" title="我的关注"></i>
+                        </a>
+                    </div>
+                    <!--新建项目-->
+                    <div class="header-jump-icon">
+                        <a href="#">
+                            <i class="el-icon-circle-plus-outline" title="新建项目"></i>
+                        </a>
+                    </div>
+
+                    <div class="header-jump-icon">
+                        <a href="#">
+                            <i class="el-icon-question" title="使用文档"></i>
+                        </a>
+                    </div>
+                    <div class="header-user-block">
+                        <el-menu
+                                background-color="#32363a"
+                                mode="horizontal"
+                                text-color="#fff"
+                                active-text-color="#ffd04b">
+                            <el-submenu index="1">
+                                <template slot="title">
+                                    <el-avatar src="/assets/avatar.png"></el-avatar>
+                                </template>
+                                <el-menu-item index="1-1">个人中心</el-menu-item>
+                                <el-menu-item index="1-2">退出</el-menu-item>
+                            </el-submenu>
+                        </el-menu>
+                    </div>
+                </div>
+            </el-header>
+            <el-container class="group-body-container">
+                <el-aside width="300px" style="margin-right: 15px;min-height: 400px">
+                    <div class="group-header">
+                        <el-row style="padding-top: 10px;height: 50px">
+                            <h2>{{currentSelectGroup}}</h2>
+                            <i class="el-icon-folder-add group-add-icon"></i>
+                        </el-row>
+                        <el-row>
+                            <p>简介：</p>
+                        </el-row>
+                        <el-row>
+                            <el-input
+                                    class="group-search-input"
+                                    placeholder="搜索分类"
+                                    prefix-icon="el-icon-search"
+                                    v-model="searchGroupKey">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    <div class="group-body">
+                        <el-menu
+                                text-color="rgba(13, 27, 62, .65)"
+                                active-text-color="#2395f1">
+                            <el-menu-item index="1">
+                                <i class="el-icon-user"></i>
+                                <span slot="title">个人空间</span>
+                            </el-menu-item>
+                            <el-menu-item index="2">
+                                <i class="el-icon-folder-opened"></i>
+                                <span slot="title">基础技术组</span>
+                            </el-menu-item>
+                            <el-menu-item index="3">
+                                <i class="el-icon-folder-opened"></i>
+                                <span slot="title">测试导入组1</span>
+                            </el-menu-item>
+                            <el-menu-item index="4">
+                                <i class="el-icon-folder-opened"></i>
+                                <span slot="title">测试导入组2</span>
+                            </el-menu-item>
+                            <el-menu-item index="5">
+                                <i class="el-icon-folder-opened"></i>
+                                <span slot="title">测试导入组3</span>
+                            </el-menu-item>
+                            <el-menu-item index="6">
+                                <i class="el-icon-folder-opened"></i>
+                                <span slot="title">测试导入组4</span>
+                            </el-menu-item>
+                        </el-menu>
+                    </div>
+                </el-aside>
+                <el-main>
+
+                    <el-tabs v-model="groupPageActiveTab" @tab-click="handleGroupPageClick">
+                        <el-tab-pane label="项目列表" name="project-tab">
+                            <div class="group-project-des">
+                                <el-row style="width: 100%">
+                                    <el-col :span="12" style="text-align: left">{{currentSelectGroup}} 分组共（0）个项目
+                                    </el-col>
+                                    <el-col :span="12">
+                                        <el-button plain>添加项目</el-button>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                            <div class="group-project-list">
+                                <el-card class="project-card">
+                                    <el-row>
+                                        <el-col>
+                                            <div class="project-item-icon">
+                                                <i class="el-icon-office-building"></i>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col><span class="project-item-title">测试项目1</span></el-col>
+                                    </el-row>
+                                </el-card>
+
+                                <el-card class="project-card">
+                                    <el-row>
+                                        <el-col>
+                                            <div class="project-item-icon">
+                                                <i class="el-icon-office-building"></i>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col><span class="project-item-title">测试项目2</span></el-col>
+                                    </el-row>
+                                </el-card>
+
+                                <el-card class="project-card">
+                                    <el-row>
+                                        <el-col>
+                                            <div class="project-item-icon">
+                                                <i class="el-icon-office-building"></i>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col><span class="project-item-title">测试项目3</span></el-col>
+                                    </el-row>
+                                </el-card>
+                                <el-card class="project-card">
+                                    <el-row>
+                                        <el-col>
+                                            <div class="project-item-icon">
+                                                <i class="el-icon-office-building"></i>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col><span class="project-item-title">测试项目4</span></el-col>
+                                    </el-row>
+                                </el-card>
+                                <el-card class="project-card">
+                                    <el-row>
+                                        <el-col>
+                                            <div class="project-item-icon">
+                                                <i class="el-icon-office-building"></i>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col><span class="project-item-title">测试项目5</span></el-col>
+                                    </el-row>
+                                </el-card>
+                                <el-card class="project-card">
+                                    <el-row>
+                                        <el-col>
+                                            <div class="project-item-icon">
+                                                <i class="el-icon-office-building"></i>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col><span class="project-item-title">测试项目6</span></el-col>
+                                    </el-row>
+                                </el-card>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="分组动态" name="dynamic-group-tab">
+                            <el-empty description="啥也没有"></el-empty>
+                        </el-tab-pane>
+                        <el-tab-pane label="成员列表" name="member-list-tab">
+                            <div class="group-member-des">
+                                <el-row style="width: 100%">
+                                    <el-col :span="24" style="text-align: left">{{currentSelectGroup}} 分组成员共（0）人
+                                    </el-col>
+                                </el-row>
+                            </div>
+                            <el-empty description="啥也没有"></el-empty>
+                        </el-tab-pane>
+
+                    </el-tabs>
+                </el-main>
             </el-container>
         </el-container>
     </template>
@@ -16,40 +218,203 @@
             components: [],
             props: [],
             data() {
-                return {}
+                return {
+                    headerSearchKey: '',
+                    currentSelectGroup: '个人空间',
+                    searchGroupKey: '',
+                    groupPageActiveTab: 'project-tab'
+                }
             },
             created() {
             },
             mounted() {
 
             },
-            methods: {}
+            methods: {
+                handleGroupPageClick(tab, event) {
+
+                }
+            }
         }
     </script>
     <style scoped>
+        .group-page-container {
+            width: 100%;
+            height: 100%;
+            background-color: #eceef1;
+        }
+
         .el-header, .el-footer {
-            background-color: #B3C0D1;
+            background-color: #32363a;
             color: #333;
             text-align: center;
             line-height: 60px;
         }
 
         .el-aside {
-            background-color: #D3DCE6;
+            background-color: #FFFFFF;
             color: #333;
             text-align: center;
-            line-height: 200px;
+            /*line-height: 200px;*/
+            height: 100%;
         }
 
         .el-main {
-            background-color: #E9EEF3;
+            background-color: #FFFFFF;
             color: #333;
             text-align: center;
-            line-height: 160px;
         }
 
         body > .el-container {
             margin: 0 auto;
+        }
+
+        .main-header-logo {
+            display: block;
+            width: 75px;
+            height: 100%;
+            box-sizing: border-box;
+            border-left: 1px solid #FFFFFF;
+            border-right: 1px solid #FFFFFF;
+        }
+
+        .main-header-logo .login-logo {
+            left: 4%;
+            top: 30px;
+        }
+
+        .main-header-logo svg {
+            width: 30px;
+            height: 30px;
+            display: block;
+        }
+
+        .main-header-title {
+            width: 150px;
+            /*height: 100%;*/
+            position: absolute;
+            display: inline-block;
+            top: -20px;
+            color: #ffffff;
+            left: 100px;
+        }
+
+        .main-header-right {
+            width: 420px;
+            position: absolute;
+            right: 0;
+            top: -3px;
+        }
+
+        .header-search {
+            width: 40%;
+            display: inline-block;
+            position: relative;
+            bottom: 22px;
+        }
+
+        .header-jump-icon {
+            display: inline-block;
+            margin-left: 10px;
+            position: relative;
+            bottom: 15px;
+        }
+
+        .header-jump-icon a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 28px;
+        }
+
+        .header-user-block {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .group-body-container {
+            margin-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+        }
+
+        .group-header {
+            height: 200px;
+            background-color: #32363a;
+            color: #FFFFFF;
+        }
+
+        .group-header .el-row {
+            text-align: left;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .group-header .el-row h2 {
+            display: inline-block;
+        }
+
+        .group-header .el-row .group-add-icon {
+            position: relative;
+            left: 120px;
+            font-size: 32px;
+        }
+
+        .group-header .el-row .group-search-input, .group-header .el-row .group-search-input input {
+            background: transparent;
+        }
+
+        .group-body {
+            min-height: 400px;
+            height: 100%;
+            text-align: left;
+        }
+
+        .group-project-des, .group-member-des {
+            background: #eee;
+            height: 64px;
+            line-height: 40px;
+            border-radius: 4px;
+            text-align: right;
+            padding: 0 10px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: rgba(39, 56, 72, .85);
+            font-weight: 500;
+        }
+        .group-project-list{
+            text-align: left;
+        }
+        .project-card{
+            width: 200px;
+            height: 220px;
+            display: inline-block;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: none !important;
+            outline: none;
+            border: none;
+        }
+        .project-item-icon{
+            width: 140px;
+            height: 140px;
+            padding-top: 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            background-color: rgb(245, 106, 0);
+            border-radius: 50%;
+            text-align: center;
+        }
+        .project-item-icon i{
+            font-size: 100px;
+            color: #FFFFFF;
+        }
+        .project-item-title{
+            font-size: 24px;
         }
     </style>
 </div>
