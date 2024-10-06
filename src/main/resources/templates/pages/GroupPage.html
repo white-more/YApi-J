@@ -59,10 +59,12 @@
                     <div class="group-header">
                         <el-row style="padding-top: 10px;height: 50px">
                             <h2>{{currentSelectGroup}}</h2>
-                            <i class="el-icon-folder-add group-add-icon"></i>
+                            <!--<el-button type="info" icon="el-icon-folder-add"-->
+                            <!--           @click="groupAddVisible = true"></el-button>-->
+                            <span @click="groupAddVisible = true"><i class="el-icon-folder-add group-add-icon"></i></span>
                         </el-row>
                         <el-row>
-                            <p>简介：</p>
+                            <p>简介：{{currentSelectGroupDesc}}</p>
                         </el-row>
                         <el-row>
                             <el-input
@@ -76,30 +78,14 @@
                     <div class="group-body">
                         <el-menu
                                 text-color="rgba(13, 27, 62, .65)"
-                                active-text-color="#2395f1">
-                            <el-menu-item index="1">
-                                <i class="el-icon-user"></i>
-                                <span slot="title">个人空间</span>
-                            </el-menu-item>
-                            <el-menu-item index="2">
-                                <i class="el-icon-folder-opened"></i>
-                                <span slot="title">基础技术组</span>
-                            </el-menu-item>
-                            <el-menu-item index="3">
-                                <i class="el-icon-folder-opened"></i>
-                                <span slot="title">测试导入组1</span>
-                            </el-menu-item>
-                            <el-menu-item index="4">
-                                <i class="el-icon-folder-opened"></i>
-                                <span slot="title">测试导入组2</span>
-                            </el-menu-item>
-                            <el-menu-item index="5">
-                                <i class="el-icon-folder-opened"></i>
-                                <span slot="title">测试导入组3</span>
-                            </el-menu-item>
-                            <el-menu-item index="6">
-                                <i class="el-icon-folder-opened"></i>
-                                <span slot="title">测试导入组4</span>
+                                active-text-color="#2395f1" v-for="(groupItem,index) in groupList"
+                                @select="groupSelect"
+                        >
+                            <el-menu-item :index="index">
+
+                                <i v-if="groupItem.type ==='private'" class="el-icon-user"></i>
+                                <i v-if="groupItem.type ==='public'" class="el-icon-folder-opened"></i>
+                                <span slot="title">{{groupItem.groupName}}</span>
                             </el-menu-item>
                         </el-menu>
                     </div>
@@ -210,6 +196,40 @@
                     </el-tabs>
                 </el-main>
             </el-container>
+            <el-dialog title="添加分组" :visible.sync="groupAddVisible">
+                <el-form :model="groupAddForm" ref="groupAddForm">
+                    <el-form-item label="分组名：">
+                        <el-input v-model="groupAddForm.groupName" autocomplete="off"
+                                  placeholder="请输入分组名"></el-input>
+                    </el-form-item>
+                    <el-form-item label="简介：">
+                        <el-input v-model="groupAddForm.groupDesc" autocomplete="off" type="textarea" :row="6"
+                                  placeholder="请输入简介"></el-input>
+                    </el-form-item>
+                    <el-form-item label="组长：">
+                        <el-select
+                                v-model="groupAddForm.uid"
+                                filterable
+                                remote
+                                reserve-keyword
+                                placeholder="请输入关键词"
+                                :remote-method="groupMemberRemoteMethod"
+                                :loading="groupAddForm.loading" width="100%">
+                            <el-option
+                                    v-for="itemMember in memberList"
+                                    :key="itemMember.uid"
+                                    :label="itemMember.username"
+                                    :value="itemMember.uid">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="groupAddCancel">取 消</el-button>
+                    <el-button type="primary" @click="groupAddConfirm">确 定</el-button>
+                </div>
+            </el-dialog>
         </el-container>
     </template>
     <script>
@@ -221,18 +241,89 @@
                 return {
                     headerSearchKey: '',
                     currentSelectGroup: '个人空间',
+                    currentSelectGroupDesc: '',
                     searchGroupKey: '',
-                    groupPageActiveTab: 'project-tab'
+                    groupPageActiveTab: 'project-tab',
+                    groupList: [],
+                    groupAddVisible: false,
+                    memberList: [],
+                    groupAddForm: {
+                        groupName: '',
+                        groupDesc: '',
+                        uid: '',
+                        loading: false,
+
+                    }
                 }
             },
             created() {
             },
             mounted() {
-
+                this.queryGroupList()
             },
             methods: {
                 handleGroupPageClick(tab, event) {
 
+                },
+                groupAddShow() {
+                    // console.log("添加分组。。。。。")
+                    this.groupAddVisible = true
+                },
+                groupSelect(index, indexPath) {
+                    // console.log(index, indexPath)
+                    let groupItem = this.groupList[index];
+                    this.currentSelectGroup = groupItem.groupName
+                    this.currentSelectGroupDesc = groupItem.groupDesc
+                },
+                async queryGroupList() {
+                    let result = await get('/group/queryByUserId');
+                    if (result.length > 0) {
+                        this.groupList = result
+                    }
+                },
+                async addGroup() {
+
+                },
+                groupAddCancel() {
+                    this.groupAddVisible = false
+                    this.groupAddForm = {
+                        groupName: '',
+                        groupDesc: '',
+                        uid: '',
+                        loading: false,
+                    }
+                },
+                async groupAddConfirm() {
+                    let result = await post('/group/addGroup', {
+                        groupName: this.groupAddForm.groupName,
+                        groupDesc: this.groupAddForm.groupDesc,
+                        uid: this.groupAddForm.uid
+                    })
+                    if(result > 0){
+                        this.groupAddVisible = false
+                        this.groupAddForm = {
+                            groupName: '',
+                            groupDesc: '',
+                            uid: '',
+                            loading: false,
+                        }
+                    }
+
+                },
+                async groupMemberRemoteMethod(query) {
+                    let that = this
+                    if (query !== '') {
+                        that.$set(that.groupAddForm, 'loading', true)
+                        let result = await get('/member/queryMemberDic', {query: query})
+                        if (result.length === 0) {
+                            that.$set(that.groupAddForm, 'loading', false)
+                            return
+                        }
+                        this.memberList = result
+                        that.$set(that.groupAddForm, 'loading', false)
+                    } else {
+                        this.memberList = [];
+                    }
                 }
             }
         }
@@ -360,6 +451,7 @@
             position: relative;
             left: 120px;
             font-size: 32px;
+            display: inline-block;
         }
 
         .group-header .el-row .group-search-input, .group-header .el-row .group-search-input input {
@@ -386,10 +478,12 @@
             color: rgba(39, 56, 72, .85);
             font-weight: 500;
         }
-        .group-project-list{
+
+        .group-project-list {
             text-align: left;
         }
-        .project-card{
+
+        .project-card {
             width: 200px;
             height: 220px;
             display: inline-block;
@@ -399,7 +493,8 @@
             outline: none;
             border: none;
         }
-        .project-item-icon{
+
+        .project-item-icon {
             width: 140px;
             height: 140px;
             padding-top: 20px;
@@ -409,11 +504,13 @@
             border-radius: 50%;
             text-align: center;
         }
-        .project-item-icon i{
+
+        .project-item-icon i {
             font-size: 100px;
             color: #FFFFFF;
         }
-        .project-item-title{
+
+        .project-item-title {
             font-size: 24px;
         }
     </style>

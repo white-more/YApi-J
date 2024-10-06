@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 /**
  * 成员信息
@@ -34,7 +35,15 @@ public class TYapiMemberInfo {
      */
     private String memberBelong;
     /**
-     * 成员类型（开发者、访客、组长）
+     * 成员类型（开发者、访客、组长） owner、dev、guest
      */
     private String memberType;
+    /**
+     * 添加时间
+     */
+    private LocalDateTime addTime;
+    /**
+     * 更新时间
+     */
+    private LocalDateTime upTime;
 }

@@ -14,4 +14,10 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         return YResult.error(500, e.getMessage());
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    public YResult exceptionHandler(AccessDeniedException e) {
+        return YResult.error(403, e.getMessage());
+    }
 }

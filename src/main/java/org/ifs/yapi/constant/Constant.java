@@ -35,11 +35,25 @@ public final class Constant {
     /**
      * 分组归属
      */
-    public final static String GROUP_AUTH_ROLE="owner";
+    public final static String GROUP_AUTH_ROLE = "owner";
+    /**
+     * 开发者
+     */
+    public final static String GROUP_AUTH_ROLE_DEV = "dev";
+    /**
+     * 访客
+     */
+    public final static String GROUP_AUTH_ROLE_GUEST = "guest";
 
 
-
-
+    /**
+     * 成员归属（分组）
+     */
+    public final static String MEMBER_BELONG_GROUP = "1";
+    /**
+     * 成员归属（接口）
+     */
+    public final static String MEMBER_BELONG_INTERFACE = "2";
 
 
 }

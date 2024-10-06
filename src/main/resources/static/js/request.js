@@ -1,10 +1,19 @@
 function request(options) {
+    let that = this
     return new Promise((resolve, reject) => {
         axios(options)
             .then(response => {
                 let data = response.data
                 if (data.errcode === 0) {
                     resolve(data.data);
+                } else if (data.errcode === 403) {
+                    Vue.prototype.$message({
+                        message: data.errmsg,
+                        type: 'error'
+                    })
+                    setTimeout(function () {
+                        router.push({name: 'login'})
+                    }, 1000);
                 } else {
                     Vue.prototype.$message({
                         message: data.errmsg,

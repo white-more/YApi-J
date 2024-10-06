@@ -4,7 +4,7 @@
   "avatar": "",
   "version": "4.9.4",
   "createdTime": "2024-10-1 18:48:44",
-  "updatedTime": "2024-10-4 07:29:55",
+  "updatedTime": "2024-10-6 16:53:05",
   "dbConns": [],
   "profile": {
     "default": {
@@ -913,7 +913,7 @@
         },
         {
           "defKey": "ROLE",
-          "defName": "组角色",
+          "defName": "组角色 owner、dev、guest",
           "comment": "",
           "type": "",
           "len": "",
@@ -1738,7 +1738,7 @@
         },
         {
           "defKey": "MEMBER_TYPE",
-          "defName": "成员类型（开发者、访客、组长）",
+          "defName": "成员类型（开发者、访客、组长） owner、dev、guest",
           "comment": "",
           "type": "",
           "len": "",
@@ -1753,6 +1753,42 @@
           "extProps": {},
           "domain": "73FD2BAD-2358-4336-B96D-45DC897BD792",
           "id": "48BA548D-01DB-4F8F-B990-412A15751C5E"
+        },
+        {
+          "defKey": "ADD_TIME",
+          "defName": "添加时间",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "baseType": "89D69E81-EA34-42EE-9FA2-93B8BD27E098",
+          "extProps": {},
+          "domain": "7CFFA0D3-6A93-4DDC-BC10-DF21211064DC",
+          "id": "9CAA68E6-9420-48FE-ABBF-E543331E477F"
+        },
+        {
+          "defKey": "UP_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "baseType": "89D69E81-EA34-42EE-9FA2-93B8BD27E098",
+          "extProps": {},
+          "domain": "7CFFA0D3-6A93-4DDC-BC10-DF21211064DC",
+          "id": "1E0D19C0-51B5-45B8-82DF-E8569DA6D7A4"
         }
       ],
       "correlations": [],

@@ -7,5 +7,7 @@
         <result property="busId" column="BUS_ID" javaType="String"/>
         <result property="memberBelong" column="MEMBER_BELONG" javaType="String"/>
         <result property="memberType" column="MEMBER_TYPE" javaType="String"/>
+        <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
+        <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
     </resultMap>
 </mapper>

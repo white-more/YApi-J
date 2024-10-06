@@ -2,7 +2,10 @@ package org.ifs.yapi.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.ifs.yapi.entity.TYapiLoginUser;
+import org.ifs.yapi.pojo.resp.MemberInfo;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 public interface TYapiLoginUserMapper extends Mapper<TYapiLoginUser> {
     /**
@@ -22,4 +25,12 @@ public interface TYapiLoginUserMapper extends Mapper<TYapiLoginUser> {
      * @return {@link Integer }
      */
     Integer checkUser(@Param("username") String username, @Param("email") String email);
+
+    /**
+     * 根据关键字模糊查询成员列表
+     *
+     * @param query 查询关键字
+     * @return {@link List }<{@link MemberInfo }>
+     */
+    List<MemberInfo> queryMemberDic(@Param("query") String query);
 }

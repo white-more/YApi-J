@@ -31,4 +31,10 @@
            or `USER_NAME` = #{email}
            or `EMAIL` = #{email}
     </select>
+    <!--根据关键字模糊查询成员列表-->
+    <select id="queryMemberDic" resultType="org.ifs.yapi.pojo.resp.MemberInfo">
+        select `ID` as uid, `USER_NAME` as username, `EMAIL` as email
+        from T_YAPI_LOGIN_USER
+        where `USER_NAME` like concat('%', #{query}, '%')
+    </select>
 </mapper>

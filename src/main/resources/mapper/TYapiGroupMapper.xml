@@ -12,4 +12,21 @@
         <result property="role" column="ROLE" javaType="String"/>
         <result property="customField1" column="CUSTOM_FIELD1" javaType="String"/>
     </resultMap>
+    <sql id="ALL_COLUMN">
+        `ID`,`GROUP_NAME`,`GROUP_DESC`,`TYPE`,`UID`,`UP_TIME`,`ADD_TIME`,`ROLE`,`CUSTOM_FIELD1`
+    </sql>
+    <select id="queryPrivateGroup" resultMap="TYapiGroupMap">
+        select <include refid="ALL_COLUMN"></include>
+            from T_YAPI_GROUP where `UID` = #{userId} and `TYPE` = 'private'
+    </select>
+    <select id="queryOwnGroup" resultMap="TYapiGroupMap">
+        select <include refid="ALL_COLUMN"></include>
+        from T_YAPI_GROUP where `UID` = #{userId} and `TYPE` = 'public'
+    </select>
+    <select id="queryOtherGroup" resultMap="TYapiGroupMap">
+        select T1.`ID`,T1.`GROUP_NAME`,T1.`GROUP_DESC`,T1.`TYPE`,T2.`UID`,T2.`UP_TIME`,T2.`ADD_TIME`,
+               T2.`MEMBER_TYPE` as ROLE,T1.`CUSTOM_FIELD1`
+        from T_YAPI_GROUP T1,T_YAPI_MEMBER_INFO T2
+        where T1.`TYPE` = 'public' and T1.`ID` = T2.`BUS_ID` AND T2.MEMBER_BELONG = '1'
+    </select>
 </mapper>

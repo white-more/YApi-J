@@ -1,5 +1,6 @@
 package org.ifs.yapi.controller;
 
+import org.ifs.yapi.common.AccessDeniedException;
 import org.ifs.yapi.common.YResult;
 import org.ifs.yapi.constant.Constant;
 import org.ifs.yapi.pojo.req.LoginUserParam;
@@ -37,7 +38,7 @@ public class YApiLoginUserController {
     public YResult<LoginUserInfo> loginUser(@RequestBody @Validated LoginUserParam param, HttpServletRequest request) {
         LoginUserInfo userInfo = loginUserService.loginUser(param.getUsername(), param.getPassword());
         if (null == userInfo) {
-            throw new IllegalArgumentException("登录用户不存在");
+            throw new AccessDeniedException("登录用户不存在");
         }
         request.getSession().setAttribute(Constant.SESSION_KEY_NAME, userInfo);
         return YResult.ok(userInfo);
