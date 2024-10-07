@@ -20,6 +20,7 @@
 <template th:replace="|/pages/login|::login"></template>
 <template th:replace="|/pages/HomePage|::HomePage"></template>
 <template th:replace="|/pages/GroupPage|::GroupPage"></template>
+<template th:replace="|/pages/ProjectAddPage|::ProjectAddPage"></template>
 <script type="text/javascript" th:src="@{/js/request.js}"></script>
 <script setup>
 
@@ -42,7 +43,11 @@
             path: '/groupPage',
             name: 'groupPage',
             component: YapiGroupPage
-        },
+        },{
+            path: '/projectAdd',
+            name: 'projectAdd',
+            component: YapiProjectAddPage
+        }
     ]
     const router = new VueRouter({
         routes
@@ -60,7 +65,8 @@
             YapiHeader,
             YapiLogin,
             YapiHomePage,
-            YapiGroupPage
+            YapiGroupPage,
+            YapiProjectAddPage
         ]
 
     })

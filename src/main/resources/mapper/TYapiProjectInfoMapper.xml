@@ -19,4 +19,8 @@
         <result property="addTime" column="ADD_TIME" javaType="java.time.LocalDateTime"/>
         <result property="upTime" column="UP_TIME" javaType="java.time.LocalDateTime"/>
     </resultMap>
+    <select id="queryByGroupId" resultType="org.ifs.yapi.pojo.resp.GroupProjectInfo">
+        select t.`ID` as id,t.`NAME` as name,t.`UID` as uid from T_YAPI_PROJECT_INFO t
+        where t.`GROUP_ID` = #{groupId}
+    </select>
 </mapper>

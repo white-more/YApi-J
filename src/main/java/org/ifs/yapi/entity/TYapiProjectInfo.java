@@ -3,6 +3,7 @@ package org.ifs.yapi.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -41,6 +42,7 @@ public class TYapiProjectInfo {
     /**
      * 项目名称
      */
+    @Column(name = "`NAME`")
     private String name;
     /**
      * 项目类型（public、private）
@@ -65,10 +67,12 @@ public class TYapiProjectInfo {
     /**
      * 角色
      */
+    @Column(name = "`ROLE`")
     private String role;
     /**
      * 描述
      */
+    @Column(name = "`DESC`")
     private String desc;
     /**
      *

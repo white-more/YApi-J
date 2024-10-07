@@ -9,9 +9,8 @@
                     <div class="group-header">
                         <el-row style="padding-top: 10px;height: 50px">
                             <h2>{{currentSelectGroup}}</h2>
-                            <!--<el-button type="info" icon="el-icon-folder-add"-->
-                            <!--           @click="groupAddVisible = true"></el-button>-->
-                            <span @click="groupAddVisible = true"><i class="el-icon-folder-add group-add-icon"></i></span>
+                            <span @click="groupAddVisible = true"><i
+                                    class="el-icon-folder-add group-add-icon"></i></span>
                         </el-row>
                         <el-row>
                             <p>简介：{{currentSelectGroupDesc}}</p>
@@ -48,15 +47,17 @@
                         <el-tab-pane label="项目列表" name="project-tab">
                             <div class="group-project-des">
                                 <el-row style="width: 100%">
-                                    <el-col :span="12" style="text-align: left">{{currentSelectGroup}} 分组共（0）个项目
+                                    <el-col :span="12" style="text-align: left">{{currentSelectGroup}}
+                                        分组共（{{projectCount}}）个项目
                                     </el-col>
                                     <el-col :span="12">
-                                        <el-button plain>添加项目</el-button>
+                                        <el-button plain @click="addProject">添加项目</el-button>
                                     </el-col>
                                 </el-row>
                             </div>
                             <div class="group-project-list">
-                                <el-card class="project-card">
+                                <el-card class="project-card" v-for="(pItem,pIndex) in projectList"
+                                         @click.native="goToProjectDetail(pItem.id)" shadow="hover">
                                     <el-row>
                                         <el-col>
                                             <div class="project-item-icon">
@@ -65,71 +66,10 @@
                                         </el-col>
                                     </el-row>
                                     <el-row>
-                                        <el-col><span class="project-item-title">测试项目1</span></el-col>
+                                        <el-col><span class="project-item-title">{{pItem.name}}</span></el-col>
                                     </el-row>
                                 </el-card>
 
-                                <el-card class="project-card">
-                                    <el-row>
-                                        <el-col>
-                                            <div class="project-item-icon">
-                                                <i class="el-icon-office-building"></i>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col><span class="project-item-title">测试项目2</span></el-col>
-                                    </el-row>
-                                </el-card>
-
-                                <el-card class="project-card">
-                                    <el-row>
-                                        <el-col>
-                                            <div class="project-item-icon">
-                                                <i class="el-icon-office-building"></i>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col><span class="project-item-title">测试项目3</span></el-col>
-                                    </el-row>
-                                </el-card>
-                                <el-card class="project-card">
-                                    <el-row>
-                                        <el-col>
-                                            <div class="project-item-icon">
-                                                <i class="el-icon-office-building"></i>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col><span class="project-item-title">测试项目4</span></el-col>
-                                    </el-row>
-                                </el-card>
-                                <el-card class="project-card">
-                                    <el-row>
-                                        <el-col>
-                                            <div class="project-item-icon">
-                                                <i class="el-icon-office-building"></i>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col><span class="project-item-title">测试项目5</span></el-col>
-                                    </el-row>
-                                </el-card>
-                                <el-card class="project-card">
-                                    <el-row>
-                                        <el-col>
-                                            <div class="project-item-icon">
-                                                <i class="el-icon-office-building"></i>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col><span class="project-item-title">测试项目6</span></el-col>
-                                    </el-row>
-                                </el-card>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="分组动态" name="dynamic-group-tab">
@@ -193,7 +133,8 @@
                 return {
                     currentSelectGroup: '个人空间',
                     currentSelectGroupDesc: '',
-                    defaultGroupSelect:'0',
+                    currentSelectGroupId: '',
+                    defaultGroupSelect: '0',
                     searchGroupKey: '',
                     groupPageActiveTab: 'project-tab',
                     groupList: [],
@@ -205,7 +146,9 @@
                         uid: '',
                         loading: false,
 
-                    }
+                    },
+                    projectList: [],
+                    projectCount: 0
                 }
             },
             created() {
@@ -226,6 +169,10 @@
                     let groupItem = this.groupList[index];
                     this.currentSelectGroup = groupItem.groupName
                     this.currentSelectGroupDesc = groupItem.groupDesc
+                    this.currentSelectGroupId = groupItem.id
+                    this.projectList = []
+                    this.projectCount = 0
+                    this.queryProject()
                 },
                 async queryGroupList() {
                     let result = await get('/group/queryByUserId');
@@ -233,6 +180,8 @@
                         this.groupList = result
                         this.currentSelectGroup = result[0].groupName
                         this.currentSelectGroupDesc = result[0].groupDesc
+                        this.currentSelectGroupId = result[0].id
+                        await this.queryProject()
                     }
                 },
                 async addGroup() {
@@ -253,7 +202,7 @@
                         groupDesc: this.groupAddForm.groupDesc,
                         uid: this.groupAddForm.uid
                     })
-                    if(result > 0){
+                    if (result > 0) {
                         this.groupAddVisible = false
                         this.groupAddForm = {
                             groupName: '',
@@ -278,6 +227,19 @@
                     } else {
                         this.memberList = [];
                     }
+                },
+                addProject() {
+                    this.$router.push({name: 'projectAdd'})
+                },
+                async queryProject() {
+                    let result = await get('/project/queryProjectByGroupId', {groupId: this.currentSelectGroupId})
+                    if (result.total > 0) {
+                        this.projectList = result.rows
+                        this.projectCount = result.total
+                    }
+                },
+                goToProjectDetail(pId) {
+                    console.log(pId)
                 }
             }
         }
@@ -374,10 +336,10 @@
             height: 220px;
             display: inline-block;
             text-align: center;
-            border-radius: 5px;
-            box-shadow: none !important;
-            outline: none;
-            border: none;
+            border-radius: 20%;
+            /*box-shadow: none !important;*/
+            /*outline: none;*/
+            /*border: none;*/
         }
 
         .project-item-icon {
