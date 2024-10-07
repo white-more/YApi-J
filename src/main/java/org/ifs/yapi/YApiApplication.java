@@ -2,6 +2,7 @@ package org.ifs.yapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
@@ -10,6 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"org.ifs.yapi.mapper"})
+@ServletComponentScan
 public class YApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(YApiApplication.class, args);

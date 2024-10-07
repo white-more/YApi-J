@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录用户控制器
@@ -69,5 +70,11 @@ public class YApiLoginUserController {
             throw new IllegalArgumentException("确认密码不一致");
         }
         return YResult.ok(loginUserService.registerUser(param.getUsername(),param.getEmail(),param.getPassword()));
+    }
+
+
+    @RequestMapping("/notLogin")
+    public YResult<String> notLogin(HttpServletRequest request, HttpServletResponse response){
+        throw new AccessDeniedException("未登录");
     }
 }

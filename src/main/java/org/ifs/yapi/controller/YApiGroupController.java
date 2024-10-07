@@ -1,6 +1,5 @@
 package org.ifs.yapi.controller;
 
-import org.ifs.yapi.common.AccessDeniedException;
 import org.ifs.yapi.common.YResult;
 import org.ifs.yapi.constant.Constant;
 import org.ifs.yapi.entity.TYapiGroup;
@@ -47,9 +46,6 @@ public class YApiGroupController {
     @GetMapping("/queryByUserId")
     public YResult<List<GroupInfo>> queryByUserId(HttpServletRequest request) {
         LoginUserInfo userInfo = (LoginUserInfo) request.getSession().getAttribute(Constant.SESSION_KEY_NAME);
-        if (null == userInfo) {
-            throw new AccessDeniedException("未登录");
-        }
         return YResult.ok(yApiGroupService.queryByUserId(userInfo.getId()));
     }
 
@@ -63,9 +59,6 @@ public class YApiGroupController {
     @PostMapping("/addGroup")
     public YResult<Integer> addGroup(@RequestBody @Validated GroupAddParam param, HttpServletRequest request) {
         LoginUserInfo userInfo = (LoginUserInfo) request.getSession().getAttribute(Constant.SESSION_KEY_NAME);
-        if (null == userInfo) {
-            throw new AccessDeniedException("未登录");
-        }
         return YResult.ok(yApiGroupService.addGroup(param.getGroupName()
                 , param.getGroupDesc()
                 , param.getUid()
