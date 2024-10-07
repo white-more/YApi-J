@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="interface">
+    <template id="yapi-interface">
+        <el-container class="yapi-interface-container">
+            <el-aside width="300px">
+                <el-tabs v-model="interfaceActiveTab" type="border-card" @tab-click="handlerInterfaceTab">
+                    <el-tab-pane label="接口列表" name="interfaceCollectTab">
+                        <el-row>
+                            <el-col :span="14">
+                                <el-input v-model="catSearchKey" placeholder="请输入内容" size="small"></el-input>
+                            </el-col>
+
+                            <el-col :span="6" style="margin-left: 10px">
+                                <el-button type="primary" size="small">添加分类</el-button>
+                            </el-col>
+                        </el-row>
+                        <el-container class="interface-cat-menu">
+                            <el-tree
+                                    :data="catList"
+                                    node-key="id"
+                                    default-expand-all
+                                    :expand-on-click-node="false"
+                                    style="width: 100%"
+                            >
+                                <el-row slot-scope="{ node, data }" >
+                                    <el-col :span="22" style="text-align: left">
+                                        <span><i v-if="data.type === 'cat'" class="el-icon-folder-opened"></i> {{ node.label }}</span>
+                                    </el-col>
+                                    <el-col :span="2" style="text-align: right" v-if="data.type === 'cat' && data.id !== 1">
+                                        <el-tooltip effect="dark" content="添加接口" placement="top-start">
+                                            <el-button type="text" size="mini" @click="() => append(data)">
+                                                <i class="el-icon-plus"></i>
+                                            </el-button>
+                                        </el-tooltip>
+                                        <el-tooltip effect="dark" content="修改分类" placement="top-start">
+                                            <el-button type="text" size="mini" @click="() => remove(node, data)">
+                                                <i class="el-icon-edit"></i>
+                                            </el-button>
+                                        </el-tooltip>
+                                        <el-tooltip effect="dark" content="删除分类" placement="right-start">
+                                            <el-button type="text" size="mini">
+                                                <i class="el-icon-delete"></i>
+                                            </el-button>
+                                        </el-tooltip>
+                                    </el-col>
+                                    <el-col :span="2" style="text-align: right" v-if="data.type === 'interface'">
+                                        <el-tooltip effect="dark" content="复制接口" placement="top-start">
+                                            <el-button type="text" size="mini">
+                                                <i class="el-icon-document-copy"></i>
+                                            </el-button>
+                                        </el-tooltip>
+                                        <el-tooltip effect="dark" content="删除接口" placement="right-start">
+                                            <el-button type="text" size="mini">
+                                                <i class="el-icon-delete"></i>
+                                            </el-button>
+                                        </el-tooltip>
+                                    </el-col>
+                                </el-row>
+                            </el-tree>
+                        </el-container>
+                    </el-tab-pane>
+                    <el-tab-pane label="测试集合" name="testCollectTab">测试集合</el-tab-pane>
+                </el-tabs>
+            </el-aside>
+            <el-main>Main</el-main>
+        </el-container>
+    </template>
+    <script>
+        const YApiInterface = {
+            template: '#yapi-interface',
+            components: [],
+            props: [],
+            data() {
+                return {
+                    interfaceActiveTab: 'interfaceCollectTab',
+                    catSearchKey: '',
+                    catList: [
+                        {
+                            id: 1,
+                            label: '全部分组',
+                            type: 'cat'
+                        },
+                        {
+                            id: 2,
+                            label: '分组1',
+                            type: 'cat',
+                            children: [
+                                {
+                                    id: 3,
+                                    label: '接口1',
+                                    type: 'interface',
+                                },
+                                {
+                                    id: 4,
+                                    label: '接口2',
+                                    type: 'interface',
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            created() {
+            },
+            mounted() {
+
+            },
+            methods: {
+                handlerInterfaceTab(tab, event) {
+
+                },
+
+                append(data) {
+                    // const newChild = { id: id++, label: 'testtest', children: [] };
+                    // if (!data.children) {
+                    //     this.$set(data, 'children', []);
+                    // }
+                    // data.children.push(newChild);
+                },
+
+                remove(node, data) {
+                    // const parent = node.parent;
+                    // const children = parent.data.children || parent.data;
+                    // const index = children.findIndex(d => d.id === data.id);
+                    // children.splice(index, 1);
+                },
+            }
+        }
+        Vue.component('yapi-interface', YApiInterface)
+    </script>
+    <style scoped>
+        .yapi-interface-container {
+            height: 100%;
+            min-width: 1000px;
+            background-color: #eceef1;
+            margin: 20px 20px;
+            box-sizing: border-box;
+
+        }
+
+        .yapi-interface-container .el-aside {
+            background-color: #FFFFFF;
+            min-height: 600px;
+            box-sizing: border-box;
+        }
+
+        .yapi-interface-container .el-main {
+            background-color: #FFFFFF;
+            /*height: 100%;*/
+            min-height: 600px;
+            box-sizing: border-box;
+            margin-left: 10px;
+        }
+
+        .yapi-interface-container .el-tabs {
+            box-sizing: border-box;
+        }
+
+        .yapi-interface-container .el-tabs .el-tabs__item {
+            padding: 0 20px;
+            height: 40px;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box;
+            line-height: 40px;
+            display: inline-block;
+            list-style: none;
+            font-size: 14px !important;
+            font-weight: 500;
+            color: #303133 !important;
+            position: relative;
+            width: 150px;
+
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+        }
+
+        .yapi-interface-container .el-tabs .el-tabs__header {
+            margin: 0 0 15px;
+        }
+
+        .yapi-interface-container .el-tabs .el-tabs__content {
+            background-color: #eceef1;
+        }
+        .interface-cat-menu{
+            min-height: 500px;
+        }
+    </style>
+</div>
+</html>

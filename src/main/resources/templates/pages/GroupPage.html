@@ -239,7 +239,8 @@
                     }
                 },
                 goToProjectDetail(pId) {
-                    console.log(pId)
+                    // console.log(pId)
+                    this.$router.push({name: 'projectDetail', params: {projectId: pId}})
                 }
             }
         }

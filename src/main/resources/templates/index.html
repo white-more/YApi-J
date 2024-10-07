@@ -17,10 +17,12 @@
 <template th:replace="|/component/indexbg|::indexbg"></template>
 <template th:replace="|/component/loginlogo|::loginlogo"></template>
 <template th:replace="|/component/header|::header"></template>
+<template th:replace="|/component/interface|::interface"></template>
 <template th:replace="|/pages/login|::login"></template>
 <template th:replace="|/pages/HomePage|::HomePage"></template>
 <template th:replace="|/pages/GroupPage|::GroupPage"></template>
 <template th:replace="|/pages/ProjectAddPage|::ProjectAddPage"></template>
+<template th:replace="|/pages/ProjectPage|::ProjectPage"></template>
 <script type="text/javascript" th:src="@{/js/request.js}"></script>
 <script setup>
 
@@ -43,12 +45,17 @@
             path: '/groupPage',
             name: 'groupPage',
             component: YapiGroupPage
-        },{
+        }, {
             path: '/projectAdd',
             name: 'projectAdd',
             component: YapiProjectAddPage
+        }, {
+            path: '/projectDetail/:projectId',
+            name: 'projectDetail',
+            component: YApiProjectPage
         }
     ]
+
     const router = new VueRouter({
         routes
     })
@@ -64,15 +71,17 @@
             YapiLoginLogo,
             YapiHeader,
             YapiLogin,
+            YApiInterface,
             YapiHomePage,
             YapiGroupPage,
-            YapiProjectAddPage
+            YapiProjectAddPage,
+            YApiProjectPage
         ]
 
     })
 </script>
 <style>
-    body,html{
+    body, html {
         margin: 0;
         padding: 0;
     }
