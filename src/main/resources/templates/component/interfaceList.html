@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="interfaceList">
+    <template id="yapi-interface-list">
+        <el-container style="flex-direction: column">
+            <el-container>
+                <div>
+                    <span>全部接口共（102）个</span>
+                </div>
+                <div>
+                    <el-button type="primary">添加接口</el-button>
+                </div>
+            </el-container>
+            <el-container style="flex-direction: column">
+                <el-table
+                        :data="tableList"
+                        style="width: 100%">
+                    <el-table-column
+                            label="接口名称"
+                            width="180">
+                        <template slot-scope="scope">
+                            <el-link>{{scope.row.name}}</el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="path"
+                            label="接口路径"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="address"
+                            label="接口分类">
+                    </el-table-column>
+                    <el-table-column
+                            prop="address"
+                            label="状态">
+                    </el-table-column>
+                    <el-table-column
+                            prop="address"
+                            label="tag">
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-sizes="[100, 200, 300, 400]"
+                        :page-size="100"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="totalCount">
+                </el-pagination>
+            </el-container>
+        </el-container>
+    </template>
+    <script>
+        const YApiInterfaceList = {
+            template: '#yapi-interface-list',
+            components: [],
+            props: [],
+            data() {
+                return {
+                    tableList: [],
+                    currentPage:1,
+                    totalCount:100
+                }
+            },
+            created() {
+            },
+            mounted() {
+
+            },
+            methods: {
+                handleSizeChange(val) {
+                    console.log(`每页 ${val} 条`);
+                },
+                handleCurrentChange(val) {
+                    console.log(`当前页: ${val}`);
+                }
+            }
+        }
+        Vue.component('yapi-interface-list', YApiInterfaceList)
+    </script>
+    <style scoped>
+
+    </style>
+</div>
+</html>
